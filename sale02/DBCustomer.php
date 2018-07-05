@@ -3,7 +3,7 @@
   class DBCustomer extends DB {
     //customerテーブルのCRUD担当
     public function UpdateCustomer() {
-      $sql = "UPDATE customer SET CustomerName=?, TEL=?, Email=?, CustomerID=?";
+      $sql = "UPDATE customer SET CustomerName=?, TEL=?, Email=? WHERE CustomerID=?";
       //array関数の引数の順番に注意
       $array = array($_POST['CustomerName'], $_POST['TEL'], $_POST['Email'], $_POST['CustomerID']);
       parent::executeSQL($sql, $array);
@@ -63,7 +63,7 @@ EOF;
         $data .= <<< EOF
           <td><form action="" method="post">
             <input type="hidden" name="id" id="Dleteid" value="{$row[0]}">
-            <input type="submit" name="delete" id="delete" value="削除" onClick="return CheckDelete">
+            <input type="submit" name="delete" id="delete" value="削除" onClick="return CheckDelete()">
           </form></td>
 EOF;
         $data .= "</tr>\n";
