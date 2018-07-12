@@ -18,12 +18,12 @@
     protected function executeSQL($sql,$array) {
       //SQLを実行する関数
       try {
-        if(!$pdo = $this->Connectdb()) return false;
+        if(!$pdo = $this->Connectdb())return false;
         $stmt = $pdo->prepare($sql);
         $stmt->execute($array);
         return $stmt;
       } catch(Exception $e) {
-        return falese; //戻り値はPDOStatementのインスタンス
+        return false; //戻り値はPDOStatementのインスタンス
       }
     }
   }

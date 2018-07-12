@@ -11,15 +11,15 @@
     $SalesDate = $_POST['SalesDate'];
   }
   //ボタンの処理（1日前を表示）
-  if(isset($_POST['next'])) {
-    $SalesDate = new DateTime($_POST['SalesDate']);
+  if(isset($_POST['prev'])) {
+    $SalesDate = new DateTime($_POST['SalesDate'], new DateTimeZone('Asia/Tokyo'));
     //日付の加算処理はaddメソッド
     $SalesDate->sub(new DateInterval('P1D'));
     $SalesDate = $SalesDate ->format("Y-m-d");
   }
   //ボタンの処理（1日後を表示）
   if(isset($_POST['next'])) {
-    $SalesDate = new DateTime($_POST['SalesDate']);
+    $SalesDate = new DateTime($_POST['SalesDate'], new DateTimeZone('Asia/Tokyo'));
     //日付の加算処理はaddメソッド
     $SalesDate->add(new DateInterval('P1D'));
     $SalesDate = $SalesDate ->format("Y-m-d");
@@ -35,7 +35,7 @@
     $dbSalesInfo->UpdateDetail();
   }
   //明細行の更新ボタンの処理（更新用フォームの表示とデータの設定）
-  $updateCss = "class='hiddenArea'";
+  $updateCss = "class='hideArea'";
   if(isset($_POST['updatedetail'])) {
     //フォーム要素の仕込み
     $updateCss = "";
@@ -51,10 +51,10 @@
   if(isset($_POST['detail'])) {
     $SalesDate = $_POST['SalesDate'];
     $CustomerID = $_POST['CustomerID'];
-    $slipDetail = $dbSalesInfo->SelectSalesinfoWithButton($SalesDate, $CustomerID);
-    $total = $dbSalesInfo->TotalAmount($salesDate, $CustomerID);//伝票の合計額
+    $slipDetail = $dbSalesInfo->SelectSalesinfoWithButton($SalesDate,$CustomerID);
+    $total = $dbSalesInfo->TotalAmount($SalesDate, $CustomerID);//伝票の合計額
     //number_format関数は3けた区切りの文字列を返す
-    $total = ($total = null)?"":"合計金額：" .number_format($total) ."円";
+    $total = ($total == null)?"":"合計金額：" .number_format($total) ."円";
   }
   //伝票の削除
   if(isset($_POST['delete'])) {
